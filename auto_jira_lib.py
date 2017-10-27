@@ -9,7 +9,6 @@ Description: Auto-jira ticket filing
 
 import requests, tarfile
 from requests.auth import HTTPBasicAuth
-from framework.lib.nulog import DEBUG
 
 class AutoJira(object):
   """ Auto Jira lib"""
@@ -17,7 +16,7 @@ class AutoJira(object):
   HOST = "https://jira.nutanix.com"
   AUTH = ("infra_jira_user", "infra_jira_user")
 
-  def __init__(self, test_class, auth=None):
+  def __init__(self, test_class=None, auth=None):
     """Instance initiator
 
     Args:
@@ -29,7 +28,9 @@ class AutoJira(object):
       self.auth = HTTPBasicAuth(self.AUTH[0], self.AUTH[1])
     else:
       self.auth = HTTPBasicAuth(auth[0], auth[1])
-    self.test_class = test_class
+    
+    if test_class:
+      self.test_class = test_class
 
   def attach_log(self, issue_id):
     """Attach log to bug
@@ -41,14 +42,14 @@ class AutoJira(object):
       REST api call response
 
     """
-    url = self._api("/rest/api/2/issue/%s/attachments" % issue_id)
-    headers = {"X-Atlassian-Token": "nocheck"}
-    tar = tarfile.open(self.test_class.log_dir + "/logs.tar", "w")
-    tar.add(self.test_class.log_dir)
-    tar.close()
-    send_file = {'file': open((self.test_class.log_dir + "/logs.tar"), "rb")}
+#    url = self._api("/rest/api/2/issue/%s/attachments" % issue_id)
+#    headers = {"X-Atlassian-Token": "nocheck"}
+#    tar = tarfile.open(self.test_class.log_dir + "/logs.tar", "w")
+#    tar.add(self.test_class.log_dir)
+#    tar.close()
+#    send_file = {'file': open((self.test_class.log_dir + "/logs.tar"), "rb")}
 
-    return requests.post(url, headers=headers, files=send_file, auth=self.auth)
+#    return requests.post(url, headers=headers, files=send_file, auth=self.auth)
 
   def create_issue(self, **kwargs):
     """ Create issue

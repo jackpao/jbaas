@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from auto_jira_lib import AutoJira
 from flask_httpauth import HTTPBasicAuth
 from flask import Flask, request
 
@@ -40,6 +41,9 @@ def testdata():
 @app.route('/issue/<issue_id>', methods=['GET'])
 def get_issue(issue_id):
   return "issue ID is %s " % issue_id, 201
+
+
+
 
 
 if __name__ == "__main__":
