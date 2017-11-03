@@ -4,4 +4,4 @@ echo "start Virtual env"
 
 `source venv/bin/activate`
 
-python hello.py
+python jbaas.py
